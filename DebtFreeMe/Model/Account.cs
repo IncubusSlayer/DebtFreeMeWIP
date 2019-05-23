@@ -9,16 +9,46 @@ using System.Threading.Tasks;
 
 namespace DebtFreeMe.Model
 {
-    class Account
+    public class Account
     {
-          public string CollectorName { get; set; }
-          public float Balance { get; set; }
-          public DateTime? AccountOpened { get; set; }
-          public DateTime? AccountClosed { get; set; }
+        public string CollectorName { get; set; }
+        public float Balance { get; set; }
+        public DateTime AccountOpened { get; set; }
+        public DateTime AccountClosed { get; set; }
+        public int CollectionID { get; set; }
 
-          public User User { get; set; }
+        public User User { get; set; }
 
         static string myconnstrng = ConfigurationManager.ConnectionStrings["connstrng"].ConnectionString;
+
+        int DataManipulation(string sql, string[] paramList, object[] paramValues)
+        {
+            if (string.IsNullOrEmpty(sql))
+                throw new ArgumentException("sql");
+
+            if (paramList == null)
+                throw new ArgumentNullException("paramList");
+
+            if (paramValues == null)
+                throw new ArgumentNullException("paramValues");
+
+            if (paramList.Length != paramValues.Length)
+                throw new ArgumentException("paramValues and paramList have different lengths");
+
+            using (var conn = new SqlConnection(myconnstrng))
+            {
+                conn.Open();
+                using (var cmd = new SqlCommand(sql, conn))
+                {
+                    for (int i = 0; i < paramList.Length; i++)
+                    {
+                        cmd.Parameters.AddWithValue(paramList[i], paramValues[i]);
+                    }
+
+                    return cmd.ExecuteNonQuery();
+                }
+            }
+        }
 
         //Selecting from DataTable
         public DataTable Selection()
@@ -31,14 +61,14 @@ namespace DebtFreeMe.Model
                 //Sql query
                 string sql = "SELECT * FROM Accounts";
                 //Creating cmd using conn and sql
-                SqlCommand cmd = new SqlCommand(sql,conn);
+                SqlCommand cmd = new SqlCommand(sql, conn);
                 //Creating SQL data adapter using cmd
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 conn.Open();
                 adapter.Fill(dt);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -50,45 +80,27 @@ namespace DebtFreeMe.Model
         }
 
         //Inserting data into Database
-        public bool Insert(Account x)
+        public bool Insert(Account account)
         {
-            //Creating default return type and setting its value to false
-            bool isSuccess = false;
+            const string sql = "INSERT INTO Accounts(CollectorName, Balance) VALUES(@CollectorName,@Balance)";
 
-            //Step 1: Connect to database
-            SqlConnection conn = new SqlConnection(myconnstrng);
-            try
-            {
-                //Step 2: Create a SQL query to insert data
-                string sql = "INSERT INTO Accounts(CollectorName, Balance) VALUES(@CollectorName,@Balance)";
-                //Create SQL command using sql and conn
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                //Create parameters to add data
-                cmd.Parameters.AddWithValue("@CollectorName", x.CollectorName);
-                cmd.Parameters.AddWithValue("@Balance", x.Balance);
+            int rows = DataManipulation(sql,
+                new string[] { "@CollectorName", "@Balance" },
+                new object[] { account.CollectorName, account.Balance });
+               
+            return rows > 0;
+        }
 
-                //Open Connection
-                conn.Open();
-                int rows = cmd.ExecuteNonQuery();
+        //Method updates data in database from application
+        public bool Update(Account account)
+        {
+            const string sql = "UPDATE Accounts SET CollectorName=@CollectorName, Balance=@Balance WHERE CollectionID=@CollectionID";
 
-                if(rows>0)
-                {
+            int rows = DataManipulation(sql,
+                new string[] { "@CollectorName", "@Balance" },
+                new object[] { account.CollectorName, account.Balance });
 
-                }
-                else
-                {
-
-                }
-            }
-            catch(Exception ex)
-            {
-
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return isSuccess;
+            return rows > 0;
         }
     }
 }
