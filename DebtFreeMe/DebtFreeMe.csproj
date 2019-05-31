@@ -75,7 +75,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Page1.xaml">
+    <Page Include="AddUpdate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -84,8 +84,8 @@
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Context.cs" />
     <Compile Include="Model\Program.cs" />
-    <Compile Include="Page1.xaml.cs">
-      <DependentUpon>Page1.xaml</DependentUpon>
+    <Compile Include="AddUpdate.xaml.cs">
+      <DependentUpon>AddUpdate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -116,6 +116,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="money-falling-20805340.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bagofmoney3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

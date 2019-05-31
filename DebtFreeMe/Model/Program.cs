@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EF6Console
+namespace DebtFreeMe.Model
 {
     class Program
     {
