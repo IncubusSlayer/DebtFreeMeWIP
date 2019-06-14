@@ -1,28 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Data.SqlClient;
+using System.Windows.Controls;
+using System.Configuration;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace DebtFreeMe.Model
 {
-    public class User
+    /// <summary>
+    /// Interaction logic for SignUp.xaml
+    /// </summary>
+    public partial class SignUp : Page
     {
-        public int UserID { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; private set; }
-        public int TotalAccounts { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public DateTime DOB { get; set; }
-        public ICollection<Account> Accounts { get; set; }
+        public SignUp()
+        {
+            InitializeComponent();
+        }
+
+        private void InitializeComponent()
+        {
+            throw new NotImplementedException();
+        }
 
         static string myconnstrng = ConfigurationManager.ConnectionStrings["connstrng"].ConnectionString;
-
-
+        
         int DataManipulation(string sql, string[] paramList, object[] paramValues)
         {
             if (string.IsNullOrEmpty(sql))
@@ -55,38 +66,24 @@ namespace DebtFreeMe.Model
         //Inserting data into Database
         public bool Insert(User user)
         {
-            const string sql = "INSERT INTO Customer(UserName, Passwrd, UserID, TotalAccounts, Name, Email,DOB) VALUES(@UserName,@Passwrd,@UserID,@TotalAccounts,@Name,@Email,@DOB)";
+            const string sql = "INSERT INTO Customer(UserName, Passwrd, UserID, TotalAccounts, Name, Email, DOB) VALUES(@UserName,@Passwrd,@UserID,@TotalAccounts,@Name,@Email,@DOB)";
 
             int rows = DataManipulation(sql,
-                new string[] { "@UserName", "@Passwrd","@UserID", "@TotalAccounts", "@Name", "@Email", "@DOB" },
+                new string[] { "@UserName", "@Passwrd", "@UserID", "@TotalAccounts", "@Name", "@Email", "@DOB" },
                 new object[] { user.UserName, user.Password, user.UserID, user.TotalAccounts, user.Name, user.Email, user.DOB });
 
             return rows > 0;
         }
 
-        // Selecting from database
-        public DataTable Selection()
+        private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            SqlConnection conn = new SqlConnection(myconnstrng);
-            DataTable dt = new DataTable();
-            try
-            {
-                string sql = "SELECT * FROM Customer";
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                conn.Open();
-                adapter.Fill(dt);
 
-            }
-            catch (Exception ex)
-            {
-
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return dt;
         }
+
+        private void BtnCancel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }

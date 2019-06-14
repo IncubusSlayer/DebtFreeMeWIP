@@ -13,20 +13,35 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DebtFreeMe
+namespace DebtFreeMe.Model
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for HomePage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class HomePage : Page
     {
-        public MainWindow()
+        public HomePage()
         {
             InitializeComponent();
-            
         }
 
-        private void Btnsubmit_Click(object sender, RoutedEventArgs e)
+        /// Populate ListView
+        private void ListViewPopulation(int UserID)
+        {
+
+        }
+
+        private void Sum()
+        {
+
+        }
+
+        private void BtnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnAddNew_Click(object sender, RoutedEventArgs e)
         {
 
         }

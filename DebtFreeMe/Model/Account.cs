@@ -10,14 +10,13 @@ using System.Threading.Tasks;
 namespace DebtFreeMe.Model
 {
     public class Account
-    {
+     {
         public string CollectorName { get; set; }
         public float Balance { get; set; }
         public DateTime AccountOpened { get; set; }
         public DateTime AccountClosed { get; set; }
         public int CollectionID { get; set; }
-
-        public User User { get; set; }
+        public int UserID { get; set; }
 
         static string myconnstrng = ConfigurationManager.ConnectionStrings["connstrng"].ConnectionString;
 
@@ -49,20 +48,15 @@ namespace DebtFreeMe.Model
                 }
             }
         }
-
-        //Selecting from DataTable
+        // Selecting from database
         public DataTable Selection()
         {
-            //Database Connection
             SqlConnection conn = new SqlConnection(myconnstrng);
             DataTable dt = new DataTable();
             try
             {
-                //Sql query
                 string sql = "SELECT * FROM Accounts";
-                //Creating cmd using conn and sql
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                //Creating SQL data adapter using cmd
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 conn.Open();
                 adapter.Fill(dt);

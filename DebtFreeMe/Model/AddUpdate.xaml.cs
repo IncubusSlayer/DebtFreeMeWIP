@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,23 @@ namespace DebtFreeMe.Model
         public Page1()
         {
             InitializeComponent();
+        }
+
+        private static string myconnstrng = ConfigurationManager.ConnectionStrings["connstrng"].ConnectionString;
+
+
+        private void BtnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            SqlConnection conn = new SqlConnection(myconnstrng);
+            conn.Open();
+
+
+
+        }
+
+        private void BtnAdd_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
