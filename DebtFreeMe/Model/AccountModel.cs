@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Configuration;
 using System.Data;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -9,14 +13,77 @@ using System.Threading.Tasks;
 
 namespace DebtFreeMe.Model
 {
-    public class Account
+    [Table("Accounts")]
+    public class AccountModel : ViewModel
      {
-        public string CollectorName { get; set; }
-        public float Balance { get; set; }
-        public DateTime AccountOpened { get; set; }
-        public DateTime AccountClosed { get; set; }
-        public int CollectionID { get; set; }
-        public int UserID { get; set; }
+        private string _CollectorName;
+        public string CollectorName
+        {
+            get { return _CollectorName; }
+            set
+            {
+                if (_CollectorName != value)
+                    _CollectorName = value;
+            }
+        }
+
+        private float _Balance;
+        public float Balance
+        {
+            get { return _Balance; }
+            set
+            {
+                if (_Balance != value)
+                    _Balance = value;
+                OnPropertyChange(nameof(Balance));
+            }
+        }
+
+        private DateTime _AccountOpened;
+        public DateTime AccountOpened
+        {
+            get { return _AccountOpened; }
+            set
+            {
+                if (_AccountOpened != value)
+                    _AccountOpened = value;
+            }
+        }
+
+        private DateTime _AccountClosed;
+        public DateTime AccountClosed
+        {
+            get { return _AccountClosed; }
+            set
+            {
+                if (_AccountClosed != value)
+                    _AccountClosed = value;
+            }
+        }
+
+        private int _CollectionID;
+        public int CollectionID
+        {
+            get { return _CollectionID; }
+            set
+            {
+                if (_CollectionID != value)
+                    _CollectionID = value;
+            }
+        }
+
+        private int _UserID;
+        [Key]
+        public int UserID
+        {
+            get { return _UserID; }
+            set
+            {
+                if (_UserID != value)
+                    _UserID = value;
+            }
+        }
+        public virtual UserModel user { get; set; }
 
         static string myconnstrng = ConfigurationManager.ConnectionStrings["connstrng"].ConnectionString;
 
@@ -74,7 +141,7 @@ namespace DebtFreeMe.Model
         }
 
         //Inserting data into Database
-        public bool Insert(Account account)
+        public bool Insert(AccountModel account)
         {
             const string sql = "INSERT INTO Accounts(CollectorName, Balance) VALUES(@CollectorName,@Balance)";
 
@@ -86,7 +153,7 @@ namespace DebtFreeMe.Model
         }
 
         //Method updates data in database from application
-        public bool Update(Account account)
+        public bool Update(AccountModel account)
         {
             const string sql = "UPDATE Accounts SET CollectorName=@CollectorName, Balance=@Balance WHERE CollectionID=@CollectionID";
 
@@ -95,6 +162,15 @@ namespace DebtFreeMe.Model
                 new object[] { account.CollectorName, account.Balance });
 
             return rows > 0;
+        }
+
+
+        protected void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<AccountModel>()
+            .HasRequired<UserModel>(a => a.user)
+            .WithMany(b => b.Accounts)
+            .HasForeignKey(c => c.UserID);
         }
     }
 }

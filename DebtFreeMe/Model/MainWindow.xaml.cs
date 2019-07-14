@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DebtFreeMe.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +18,12 @@ namespace DebtFreeMe
     /// <summary>
     /// Interaction logic for WindowMain.xaml
     /// </summary>
-    public partial class WindowMain : Window
+    public partial class MainWindow : Window
     {
-        public WindowMain()
+        public MainWindow()
         {
             InitializeComponent();
+            this.Show();
         }
     }
 }

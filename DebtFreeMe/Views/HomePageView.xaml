@@ -1,13 +1,11 @@
-﻿<Page x:Class="DebtFreeMe.Model.HomePage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:DebtFreeMe.Model"
-      mc:Ignorable="d" 
-      d:DesignHeight="460" d:DesignWidth="800"
-      Title="HomePage">
-
+﻿<UserControl x:Class="DebtFreeMe.Views.HomePageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DebtFreeMe.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="460" d:DesignWidth="800">
     <Grid DataContext="{Binding Source=Customer}">
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -18,7 +16,7 @@
         <Image x:Name="bckgrdImage" HorizontalAlignment="Left" Height="460" Margin="0,0,0,0" VerticalAlignment="Top" Width="800" Source="/DebtFreeMe;component/money-falling-20805340.jpg" Stretch="Fill" Opacity="0.55"/>
         <TextBox x:Name="txtboxTitle" TextWrapping="Wrap" Text="Debt Free Me" Background="{x:Null}" FontSize="56" FontFamily="MV Boli" TextAlignment="Center" Margin="0,20,0,0" FontWeight="Bold" FontStyle="Italic"/>
         <Border x:Name="bdListView" Width="340" Height="350" Margin="403,95,57,12" BorderThickness="5" BorderBrush="Black" CornerRadius="10" Background="White" Opacity="0.3"  />
-        <ListView x:Name="lvSearchDisplay" HorizontalAlignment="Left" Height="275" Margin="425,120,0,0" VerticalAlignment="Top" Width="300" Background="White" Opacity="0.5">
+        <ListView x:Name="lvSearchDisplay" ItemsSource="{Binding Accounts, BindsDirectlyToSource=True, Mode=TwoWay, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="275" Margin="425,120,0,0" VerticalAlignment="Top" Width="300" Background="White" Opacity="0.5">
             <ListView.View>
                 <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Current Accounts">
                     <GridViewColumn DisplayMemberBinding="{Binding Path=CollectorName}" Header="Account" Width="100" />
@@ -42,4 +40,4 @@
         <Label x:Name="lblTotalDue" Content="Total Amt Due:" Height="50" Width="160" Margin="-460,120,57,12" FontSize="20" FontWeight="DemiBold" />
         <Label x:Name="lblAccountsOverdue" Content="Accts Overdue: " Height="50" Width="145" Margin="-475,335,57,12" FontSize="20" FontWeight="DemiBold"  />
     </Grid>
-</Page>
+</UserControl>

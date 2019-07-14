@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -17,27 +16,22 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DebtFreeMe.Model
+namespace DebtFreeMe.Views
 {
     /// <summary>
-    /// Interaction logic for Login.xaml
+    /// Interaction logic for LoginView.xaml
     /// </summary>
-    public partial class Login : Window
+    public partial class LoginView : UserControl
     {
-        public Login()
+        public LoginView()
         {
             InitializeComponent();
         }
 
-        private void InitializeComponent()
-        {
-            throw new NotImplementedException();
-        }
+        private static string myconnstrng = ConfigurationManager.ConnectionStrings["connstrng"].ConnectionString;
 
-        static string myconnstrng = ConfigurationManager.ConnectionStrings["connstrng"].ConnectionString;
-
-        private object txtboxUsername;
-        private object pboxPasswrd;
+        private readonly object txtboxUsername;
+        private readonly object pboxPasswrd;
 
         private void BtnSignIn_Click(object sender, RoutedEventArgs e)
         {
@@ -57,8 +51,8 @@ namespace DebtFreeMe.Model
                 {
                     /// Need to retrieve userID for User
                     MainWindow homewindow = new MainWindow();
-                     homewindow.Show();
-                     this.Close();
+                    homewindow.Show();
+                    this.Close();
                 }
                 else
                 {

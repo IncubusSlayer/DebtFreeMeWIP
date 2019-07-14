@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -9,16 +12,98 @@ using System.Threading.Tasks;
 
 namespace DebtFreeMe.Model
 {
-    public class User
+    [Table("Customer")]
+    public class UserModel : ViewModel
     {
-        public int UserID { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; private set; }
-        public int TotalAccounts { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public DateTime DOB { get; set; }
-        public ICollection<Account> Accounts { get; set; }
+        private int _UserID;
+        [Key]
+        public int UserID
+        {
+            get {return _UserID; }
+            set
+            {
+                if (_UserID != value)
+                    _UserID = value;
+                OnPropertyChange(nameof(UserID));
+            }
+        }
+
+        private string _UserName;
+        public string UserName
+        {
+            get { return _UserName; }
+            set
+            {
+                if (_UserName != value)
+                    _UserName = value;
+                OnPropertyChange(nameof(UserName));
+            }
+        }
+
+        private string _Password;
+        public string Password
+        {
+            get { return _Password; }
+            set
+            {
+                if (_Password != value)
+                    _Password = value;
+                OnPropertyChange(nameof(Password));
+            }
+        }
+
+        private int _TotalAccounts;
+        public int TotalAccounts
+        {
+            get { return _TotalAccounts; }
+            set
+            {
+                if (_TotalAccounts != value)
+                    _TotalAccounts = value;
+                OnPropertyChange(nameof(TotalAccounts));
+            }
+        }
+
+        private static string firstName;
+        private static string lastName;
+        private string _Name = firstName + " " + lastName;
+        public string Name
+        {
+            get { return _Name; }
+            set
+            {
+                if (_Name != value)
+                    _Name = value;
+                OnPropertyChange(nameof(Name));
+            }
+        }
+
+        private string _Email;
+        public string Email
+        {
+            get { return _Email; }
+            set
+            {
+                if (_Email != value)
+                    _Email = value;
+                OnPropertyChange(nameof(Email));
+            }
+        }
+
+        private DateTime _DOB;
+        public DateTime DOB
+        {
+            get { return _DOB; }
+            set
+            {
+                if (_DOB != value)
+                    _DOB = value;
+                OnPropertyChange(nameof(DOB));
+            }
+        }
+
+        [ForeignKey("UserID")]
+        public virtual ICollection<AccountModel> Accounts { get; set; }
 
         static string myconnstrng = ConfigurationManager.ConnectionStrings["connstrng"].ConnectionString;
 
@@ -53,7 +138,7 @@ namespace DebtFreeMe.Model
         }
 
         //Inserting data into Database
-        public bool Insert(User user)
+        public bool Insert(UserModel user)
         {
             const string sql = "INSERT INTO Customer(UserName, Passwrd, UserID, TotalAccounts, Name, Email,DOB) VALUES(@UserName,@Passwrd,@UserID,@TotalAccounts,@Name,@Email,@DOB)";
 

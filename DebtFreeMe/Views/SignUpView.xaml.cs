@@ -1,12 +1,13 @@
-﻿using System;
+﻿using DebtFreeMe.Model;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Data.SqlClient;
 using System.Windows.Controls;
-using System.Configuration;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -15,25 +16,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DebtFreeMe.Model
+namespace DebtFreeMe.Views
 {
     /// <summary>
-    /// Interaction logic for SignUp.xaml
+    /// Interaction logic for SignUpView.xaml
     /// </summary>
-    public partial class SignUp : Page
+    public partial class SignUpView : UserControl
     {
-        public SignUp()
+        public SignUpView()
         {
             InitializeComponent();
         }
 
-        private void InitializeComponent()
-        {
-            throw new NotImplementedException();
-        }
-
         static string myconnstrng = ConfigurationManager.ConnectionStrings["connstrng"].ConnectionString;
-        
+
         int DataManipulation(string sql, string[] paramList, object[] paramValues)
         {
             if (string.IsNullOrEmpty(sql))
@@ -64,7 +60,7 @@ namespace DebtFreeMe.Model
         }
 
         //Inserting data into Database
-        public bool Insert(User user)
+        public bool Insert(UserModel user)
         {
             const string sql = "INSERT INTO Customer(UserName, Passwrd, UserID, TotalAccounts, Name, Email, DOB) VALUES(@UserName,@Passwrd,@UserID,@TotalAccounts,@Name,@Email,@DOB)";
 
@@ -77,12 +73,16 @@ namespace DebtFreeMe.Model
 
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
+            /// Call 'ifUserNameVerification' function
+            /// if it doesnt already exist then send data to SQL
+            /// then Navigate back to Login window for sign in
+            /// close this window and page
 
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
-
+            /// Navigate bact to Login page 
         }
 
     }

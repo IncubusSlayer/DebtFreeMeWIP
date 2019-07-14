@@ -13,37 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DebtFreeMe.Model
+namespace DebtFreeMe.Views
 {
     /// <summary>
-    /// Interaction logic for HomePage.xaml
+    /// Interaction logic for AddAccountView.xaml
     /// </summary>
-    public partial class HomePage : Page
+    public partial class AddAccountView : UserControl
     {
-        public HomePage()
+        public AddAccountView()
         {
             InitializeComponent();
-        }
-
-        /// Populate ListView
-        private void ListViewPopulation(int UserID)
-        {
-
-        }
-
-        private void Sum()
-        {
-
-        }
-
-        private void BtnUpdate_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void BtnAddNew_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
